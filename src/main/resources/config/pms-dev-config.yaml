@@ -1,0 +1,11 @@
+http:
+  port: "8081"
+
+aws_s3:
+  secretKey: "AKIA52NURTTNBWO5OK77"
+  accessKey: "pkWo5yQZAKcFWiaOEhSClVvuvNa7Z6GLbrGSsiqQ"
+  publicBucket: "pms-user-documents-public"
+  privateBucket: "pms-user-documents-private"
+  
+
+  

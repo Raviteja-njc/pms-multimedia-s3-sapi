@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd">
+	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="6d8ae4c3-6035-45bc-a5e5-3975f947f0ec" >
+		<s3:basic-connection accessKey="${aws_s3.accessKey}" secretKey="${aws_s3.secretKey}" region="AP_SOUTH_1"/>
+	</s3:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="354479f6-0648-49fb-a450-b1c70284fc3e" file="config\pms-${env}-config.yaml" />
+	<global-property doc:name="Global Property" doc:id="62453e83-cd13-42ae-93f5-e915e895ea07" name="env" value="dev" />
+</mule>

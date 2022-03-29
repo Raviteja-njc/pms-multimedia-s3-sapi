@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:s3="http://www.mulesoft.org/schema/mule/s3"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<flow name="deleteObjectFlowImplementation" doc:id="bde76e3a-580e-41b1-8ca5-41505a5af14b" >
+		<set-variable value='#[attributes.uriParams.ID ++ "/" ++ attributes.uriParams.filename]' doc:name="Set file path" doc:id="afe6d374-9e3b-4e7f-8899-9fe7a45ac290" variableName="filepath"/>
+		<logger level="INFO" doc:name="Logger" doc:id="8370812d-0469-40cf-be5f-b97f4f042cda" message="#[vars.filepath]"/>
+		<s3:delete-object doc:name="Delete object" doc:id="a54e4947-8006-40e1-bc9b-c50cd23a9906" config-ref="Amazon_S3_Configuration" bucketName="${aws_s3.privateBucket}" key='#[vars.filepath]'/>
+		<logger level="INFO" doc:name="Logger" doc:id="c1f3bc82-43f1-4991-a3b7-2e62bfa6bd16" message="#[payload]"/>
+		<ee:transform doc:name="Response Message" doc:id="974636b8-06f2-4e49-a7a7-0d14c2ea946e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"filename": vars.filepath,
+	"message" : "file deleted successfully"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
